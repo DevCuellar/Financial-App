@@ -1,10 +1,8 @@
 import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
-import { RegisterDto, LoginDto } from '../dto';
 import { Response } from 'express';
-import { AuthResponseDto } from '../dto';
+import { AuthResponseDto, VerifyEmailDto, RegisterDto, LoginDto } from '../dto';
 import { sendError, sendSuccess } from '@shared';
-import { VerifyEmailDto } from '../dto/veryfy-email.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -31,14 +29,23 @@ export class AuthController {
   }
 
   @Post('verify-email')
-  async verifyEmail(@Res() res: Response, @Body() verifyEmailDto: VerifyEmailDto) {
+  async verifyEmail(
+    @Res() res: Response,
+    @Body() verifyEmailDto: VerifyEmailDto
+  ) {
     try {
       const ok = await this.authService.verifyEmail(verifyEmailDto.token);
-      if(ok){
-        sendSuccess(res, {})
+      if (ok) {
+        sendSuccess(res, {});
       }
     } catch (error) {
       return sendError(res, [error.message], 401);
     }
+  }
+
+  @Post('validate-token')
+  async validateToken(@Body('token') token: string): Promise<{ user }> {
+    const user = await this.authService.validateToken(token);
+    return { user };
   }
 }

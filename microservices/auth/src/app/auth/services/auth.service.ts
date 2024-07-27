@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/authuser.entity';
-import { RegisterDto, LoginDto } from '../dto';
+import { RegisterDto, LoginDto, JwtPayloadDto } from '../dto';
 import * as bcrypt from 'bcrypt';
-import { AuthResponseDto } from '../dto/auth-response.dto';
+import { AuthResponseDto } from '../dto';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
@@ -66,16 +66,18 @@ export class AuthService {
   }
 
   async verifyEmail(token: string): Promise<boolean> {
-    const user = await this.userRepository.findOne({ where: { emailValidationToken: token } });
+    const user = await this.userRepository.findOne({
+      where: { emailValidationToken: token },
+    });
     if (!user) {
-        throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException('Invalid token');
     }
     await this.jwtService.verify(token);
     user.emailVerified = 'Y';
     user.emailValidationToken = null;
     await this.userRepository.save(user);
     return true;
-}
+  }
 
   private async generateValidationToken(email: string): Promise<string> {
     const payload = { email: email };
@@ -95,5 +97,15 @@ export class AuthService {
     await this.userRepository.save(user);
 
     return { accessToken, refreshToken };
+  }
+
+  async validateToken(token: string): Promise<JwtPayloadDto | null> {
+    try {
+      const decoded = this.jwtService.verify(token);
+      console.log(decoded);
+      return decoded;
+    } catch (error) {
+      return null;
+    }
   }
 }
