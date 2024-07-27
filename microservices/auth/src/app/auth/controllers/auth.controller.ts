@@ -12,7 +12,7 @@ export class AuthController {
   async register(@Res() res: Response, @Body() registerDto: RegisterDto) {
     try {
       await this.authService.register(registerDto);
-      return sendSuccess(res, {});
+      return sendSuccess(res, {}, 201);
     } catch (error) {
       return sendError(res, [error.message], HttpStatus.CONFLICT);
     }
