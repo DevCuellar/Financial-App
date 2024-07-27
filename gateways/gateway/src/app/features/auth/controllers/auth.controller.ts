@@ -5,7 +5,7 @@ import { sendSuccess, sendError } from '@shared';
 import { Response } from 'express';
 import { VerifyEmailDto } from '../dto/verify-email.dto';
 import { AuthService } from '../services/auth.service';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -23,7 +23,6 @@ export class AuthController {
   async register(@Res() res: Response, @Body() registerDto: RegisterDto) {
     try {
       const response = await this.authService.register(registerDto);
-      console.log(JSON.stringify(response));
       return sendSuccess(res, response.data, response.status);
     } catch (error) {
       if (error.response && error.response.data) {
