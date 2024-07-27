@@ -1,0 +1,101 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Serve API Gateway",
+        "type": "shell",
+        "command": "nx serve gateway",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Auth Service",
+        "type": "shell",
+        "command": "nx serve auth",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Category Service",
+        "type": "shell",
+        "command": "nx serve category",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Transaction Service",
+        "type": "shell",
+        "command": "nx serve transaction",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Budget Service",
+        "type": "shell",
+        "command": "nx serve budget",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Notification Service",
+        "type": "shell",
+        "command": "nx serve notification",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve Frontend",
+        "type": "shell",
+        "command": "nx serve frontend",
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Serve All",
+        "type": "shell",
+        "dependsOn": [
+          "Serve API Gateway",
+          "Serve Auth Service",
+          "Serve Category Service",
+          "Serve Transaction Service",
+          "Serve Budget Service",
+          "Serve Notification Service",
+          "Serve Frontend"
+        ],
+        "group": "build",
+        "presentation": {
+          "reveal": "always",
+          "panel": "new"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
