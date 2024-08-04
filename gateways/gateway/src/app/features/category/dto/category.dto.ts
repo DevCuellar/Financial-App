@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNumber, IsOptional, IsDateString } from 'class-validator';
 
-export class CategoryResponseDto {
+export class CategoryDto {
   @IsNumber()
   @ApiProperty({ example: 1 })
   id: number;
@@ -14,10 +14,6 @@ export class CategoryResponseDto {
   @IsString()
   @ApiProperty({ example: "Expenses related to food and groceries" })
   description?: string;
-
-  @IsNumber()
-  @ApiProperty({ example: 1 })
-  userId: number;
 
   @IsOptional()
   @IsDateString()
