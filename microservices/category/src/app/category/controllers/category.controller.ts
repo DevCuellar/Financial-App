@@ -15,7 +15,7 @@ export class CategoryController {
       const categories = await this.categoryService.getCategories(userId);
       const categoriesDto = plainToInstance(CategoryDto, categories, { excludeExtraneousValues: true });
       return sendSuccess(res, categoriesDto, 200);
-    } catch (error) {
+    } catch (error) { 
       return sendError(res, [error.message], HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

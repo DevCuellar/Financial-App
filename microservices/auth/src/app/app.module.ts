@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { User } from './auth/entities/authuser.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GatewayAuthMiddleware } from './middlewares/gateway-auth.middleware';
 
 @Module({
   imports: [
@@ -22,4 +23,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(GatewayAuthMiddleware).forRoutes('*');
+  }
+}
