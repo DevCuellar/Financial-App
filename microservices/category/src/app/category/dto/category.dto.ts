@@ -8,6 +8,11 @@ export class CategoryDto {
   @ApiProperty({ example: 1 })
   id: number;
 
+  @Exclude()
+  @IsNumber()
+  @ApiProperty({ example: 1 })
+  userId: number;
+
   @Expose()
   @IsString()
   @ApiProperty({ example: "Groceries" })
@@ -18,11 +23,6 @@ export class CategoryDto {
   @IsString()
   @ApiProperty({ example: "Expenses related to food and groceries" })
   description?: string;
-
-  @Exclude()
-  @IsNumber()
-  @ApiProperty({ example: 1 })
-  userId: number;
 
   @Expose()
   @IsOptional()

@@ -4,7 +4,7 @@ import { IsString, IsOptional, IsNumber } from 'class-validator';
 export class UpdateCategoryDto {
   @IsString()
   @ApiProperty({ example: 'Groceries' })
-  name: string;
+  name?: string;
 
   @IsOptional()
   @IsString()
@@ -13,5 +13,5 @@ export class UpdateCategoryDto {
 
   @IsNumber()
   @ApiProperty({ example: 1 })
-  userId: number;
+  userId?: number;
 }

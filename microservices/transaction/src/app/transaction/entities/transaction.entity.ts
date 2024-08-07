@@ -12,14 +12,11 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 255 })
-  description: string;
+  @Column({ type: 'int' })
+  userId: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  amount: number;
-
-  @Column({ type: 'date' })
-  date: Date;
+  @Column({ type: 'int' })
+  categoryId: number;
 
   @Column({
     type: 'enum',
@@ -28,11 +25,14 @@ export class Transaction {
   })
   type: TransactionType;
 
-  @Column({ type: 'int' })
-  categoryId: number;
+  @Column({ type: 'date' })
+  date: Date;
 
-  @Column({ type: 'int' })
-  userId: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  amount: number;
+
+  @Column({ type: 'varchar', length: 255 })
+  description: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
