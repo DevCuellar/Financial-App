@@ -4,9 +4,10 @@ import { CategoryModule } from './features/category/category.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpHeaderInterceptor } from './interceptors/http-header.interceptor';
 import { HttpModule } from '@nestjs/axios';
+import { TransactionModule } from './features/transaction/transaction.module';
 
 @Module({
-  imports: [HttpModule, AuthModule, CategoryModule],
+  imports: [HttpModule, AuthModule, CategoryModule, TransactionModule],
   controllers: [],
   providers: [
     {

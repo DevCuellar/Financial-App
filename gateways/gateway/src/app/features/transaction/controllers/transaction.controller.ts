@@ -2,23 +2,23 @@ import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res, 
 import { AuthGuard } from '../../auth/guards/auth.guard';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
-import { CategoryService } from '../services/category.service';
+import { TransactionService } from '../services/transaction.service';
 import { sendError, sendSuccess } from '@shared';
-import { CategoryDto, CreateCategoryDto, UpdateCategoryDto } from '../dto';
+import { TransactionDto, CreateTransactionDto, UpdateTransactionDto } from '../dto';
 
-@ApiTags('categories')
-@Controller('categories')
+@ApiTags('transactions')
+@Controller('transactions')
 @UseGuards(AuthGuard)
-export class CategoryController {
-  constructor(private categoryService: CategoryService) {}
+export class TransactionController {
+  constructor(private transactionService: TransactionService) {}
 
-  @ApiResponse({ status: 200, description: 'Body with the categories', type: [CategoryDto] })
+  @ApiResponse({ status: 200, description: 'Body with the transactions', type: [TransactionDto] })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @Get()
-  async getCategories(@Req() req: Request, @Res() res: Response) {
+  async getTransactions(@Req() req: Request, @Res() res: Response) {
     try {
       const userId = req['user']?.id;
-      const response = await this.categoryService.getCategories(userId);
+      const response = await this.transactionService.getTransactions(userId);
       return sendSuccess(res, response.data, response.status);
     } catch (error) {
       if (error.response && error.response.data) {
@@ -28,14 +28,14 @@ export class CategoryController {
     }
   }
 
-  @ApiResponse({ status: 200, description: 'Body with the category', type: CategoryDto })
-  @ApiResponse({ status: 404, description: 'Category not found' })
+  @ApiResponse({ status: 200, description: 'Body with the transaction', type: TransactionDto })
+  @ApiResponse({ status: 404, description: 'Transaction not found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @Get(':id')
-  async getCategoryById(@Req() req: Request, @Res() res: Response, @Param('id') id: number) {
+  async getTransactionById(@Req() req: Request, @Res() res: Response, @Param('id') id: number) {
     try {
       const userId = req['user']?.id;
-      const response = await this.categoryService.getCategoryById(userId, id);
+      const response = await this.transactionService.getTransactionById(userId, id);
       return sendSuccess(res, response.data, response.status);
     } catch (error) {
       if (error.response && error.response.data) {
@@ -45,15 +45,15 @@ export class CategoryController {
     }
   }
 
-  @ApiBody({ type: CreateCategoryDto })
-  @ApiResponse({ status: 201, description: 'Category created.', type: CategoryDto })
-  @ApiResponse({ status: 409, description: 'Conflict. Category name already exists.' })
+  @ApiBody({ type: CreateTransactionDto })
+  @ApiResponse({ status: 201, description: 'Transaction created.', type: TransactionDto })
+  @ApiResponse({ status: 409, description: 'Conflict. Transaction name already exists.' })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @Post()
-  async postCategory(@Res() res: Response, @Body() newCategoryDto: CreateCategoryDto, @Req() req: Request) {
+  async postTransaction(@Res() res: Response, @Body() newTransactionDto: CreateTransactionDto, @Req() req: Request) {
     try {
       const userId = req['user']?.id;
-      const response = await this.categoryService.postCategory(userId, newCategoryDto);
+      const response = await this.transactionService.postTransaction(userId, newTransactionDto);
       return sendSuccess(res, response.data, response.status);
     } catch (error) {
       if (error.response && error.response.data) {
@@ -63,19 +63,19 @@ export class CategoryController {
     }
   }
 
-  @ApiBody({ type: CreateCategoryDto })
-  @ApiResponse({ status: 200, description: 'Category updated.', type: CategoryDto })
+  @ApiBody({ type: CreateTransactionDto })
+  @ApiResponse({ status: 200, description: 'Transaction updated.', type: TransactionDto })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @Put(':id')
-  async putCategory(
+  async putTransaction(
     @Req() req: Request,
     @Res() res: Response,
-    @Body() updateCategoryDto: UpdateCategoryDto,
+    @Body() updateTransactionDto: UpdateTransactionDto,
     @Param('id') id: number
   ) {
     try {
       const userId = req['user']?.id;
-      const response = await this.categoryService.putCategory(userId, id, updateCategoryDto);
+      const response = await this.transactionService.putTransaction(userId, id, updateTransactionDto);
       return sendSuccess(res, response.data, response.status);
     } catch (error) {
       if (error.response && error.response.data) {
@@ -85,15 +85,15 @@ export class CategoryController {
     }
   }
 
-  @ApiBody({ type: CreateCategoryDto })
-  @ApiResponse({ status: 200, description: 'Category deleted.' })
-  @ApiResponse({ status: 404, description: 'Category not found' })
+  @ApiBody({ type: CreateTransactionDto })
+  @ApiResponse({ status: 200, description: 'Transaction deleted.' })
+  @ApiResponse({ status: 404, description: 'Transaction not found' })
   @ApiResponse({ status: 500, description: 'Internal Server Error.' })
   @Delete(':id')
-  async deleteCategory(@Res() res: Response, @Req() req: Request, @Param('id') id: number) {
+  async deleteTransaction(@Res() res: Response, @Req() req: Request, @Param('id') id: number) {
     try {
       const userId = req['user']?.id;
-      const response = await this.categoryService.deleteCategory(userId, id);
+      const response = await this.transactionService.deleteTransaction(userId, id);
       return sendSuccess(res, null, response.status);
     } catch (error) {
       if (error.response && error.response.data) {

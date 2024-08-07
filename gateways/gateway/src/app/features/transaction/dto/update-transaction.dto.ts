@@ -5,10 +5,6 @@ import { TransactionType } from '../enums/transaction-type.enum';
 export class UpdateTransactionDto {
   @IsNumber()
   @ApiProperty({ example: 1 })
-  userId?: number;
-
-  @IsNumber()
-  @ApiProperty({ example: 1 })
   categoryId?: number;
 
   @IsEnum(TransactionType)
